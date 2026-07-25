@@ -1,8 +1,7 @@
 import streamlit as st
 
-# Import your AI logic from your agent_brain file
-# NOTE: Make sure "run_agent" is the actual name of your function! 
-from agent_brain import run_agent 
+# Fixed import statement to match your exact function name
+from agent_brain import run_farm_advisor 
 
 # --- UI Configuration & Styling ---
 st.set_page_config(page_title="AgroSmart AI", page_icon="🌱", layout="centered")
@@ -32,7 +31,6 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # --- Header Section ---
-# Ensure "logo.png" is in the same folder as this script
 try:
     st.image("logo.png", use_column_width=False, width=150)
 except:
@@ -58,8 +56,11 @@ if st.button("Run AI Analysis"):
     if crop_type and state and city:
         with st.spinner("Agent is analyzing live weather data..."):
             try:
-                # Call the backend agent function
-                result = run_agent(crop_type, state, city)
+                # Combine city and state into a single location string
+                full_location = f"{city}, {state}"
+                
+                # Call your correctly named backend function
+                result = run_farm_advisor(crop_type=crop_type, location=full_location)
 
                 # --- FIXED UI OUTPUT BOX ---
                 st.markdown(f"""

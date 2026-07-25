@@ -77,6 +77,9 @@ def run_farm_advisor(crop_type="Wheat", location="Midnapore, West Bengal"):
     print("\n=== AGENT FINAL RECOMMENDATION ===")
     print(result["messages"][-1].content)
     print("===================================\n")
+    
+    # This return statement sends the text back to dashboard.py!
+    return result["messages"][-1].content
 
 if __name__ == "__main__":
     run_farm_advisor()
