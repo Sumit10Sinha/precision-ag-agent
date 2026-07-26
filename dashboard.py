@@ -1,13 +1,23 @@
 import streamlit as st
 import base64
 import os
+from PIL import Image
 
 # Fixed import statement to match your exact function name
 from agent_brain import run_farm_advisor 
 
 # --- UI Configuration & Styling ---
-# CHANGED: page_icon is now pointing to your logo file instead of an emoji
-st.set_page_config(page_title="AgroSmart AI", page_icon="logo.jpg", layout="wide", initial_sidebar_state="collapsed")
+# Safely open the logo file as an actual Image Object for the browser tab
+try:
+    img_icon = Image.open("logo.jpg")
+except:
+    try:
+        img_icon = Image.open("logo.png") # Fallback just in case
+    except:
+        img_icon = "🌱" # Final fallback if the file is completely missing
+
+# Pass the Image Object to page_icon
+st.set_page_config(page_title="AgroSmart AI", page_icon=img_icon, layout="wide", initial_sidebar_state="collapsed")
 
 # Helper function to load local image as a CSS background or HTML image
 def get_base64_of_bin_file(bin_file):
@@ -18,10 +28,13 @@ def get_base64_of_bin_file(bin_file):
     except FileNotFoundError:
         return None
 
-# --- IMAGE LOADER (Strictly checking for .jpg formats) ---
+# --- IMAGE LOADER ---
+# Checks for .jpg format, with a fallback to .jpeg for the background
 bg_base64 = get_base64_of_bin_file('website_banner_image.jpg')
+if not bg_base64:
+    bg_base64 = get_base64_of_bin_file('website_banner_image.jpeg')
 
-# Looking for logo in .jpg format, with a quick fallback to .png just in case
+# Checks for .jpg format, with a fallback to .png for the logo
 logo_base64 = get_base64_of_bin_file('logo.jpg') 
 if not logo_base64:
     logo_base64 = get_base64_of_bin_file('logo.png')
@@ -34,7 +47,6 @@ else:
 
 # Construct the Logo HTML
 if logo_base64:
-    # We use image/jpeg in the data URI to match the .jpg format, but it generally renders both safely
     logo_html = f'<img src="data:image/jpeg;base64,{logo_base64}" class="hero-logo" alt="AgroSmart AI Logo">'
 else:
     # Fallback just in case the logo is missing
