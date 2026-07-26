@@ -1,5 +1,6 @@
 import streamlit as st
 import base64
+import os
 
 # Fixed import statement to match your exact function name
 from agent_brain import run_farm_advisor 
@@ -17,9 +18,13 @@ def get_base64_of_bin_file(bin_file):
     except FileNotFoundError:
         return None
 
-# Load your specific background and logo images
-bg_base64 = get_base64_of_bin_file('website_banner_image.jpeg')
-logo_base64 = get_base64_of_bin_file('logo.png') # Make sure your file is named logo.png
+# --- IMAGE LOADER (Strictly checking for .jpg formats) ---
+bg_base64 = get_base64_of_bin_file('website_banner_image.jpg')
+
+# Looking for logo in .jpg format, with a quick fallback to .png just in case
+logo_base64 = get_base64_of_bin_file('logo.jpg') 
+if not logo_base64:
+    logo_base64 = get_base64_of_bin_file('logo.png')
 
 # Construct the background CSS
 if bg_base64:
@@ -29,7 +34,8 @@ else:
 
 # Construct the Logo HTML
 if logo_base64:
-    logo_html = f'<img src="data:image/png;base64,{logo_base64}" class="hero-logo" alt="AgroSmart AI Logo">'
+    # We use image/jpeg in the data URI to match the .jpg format, but it generally renders both safely
+    logo_html = f'<img src="data:image/jpeg;base64,{logo_base64}" class="hero-logo" alt="AgroSmart AI Logo">'
 else:
     # Fallback just in case the logo is missing
     logo_html = '<div class="hero-title">🌱 AGROSMART AI</div>'
@@ -158,7 +164,6 @@ st.write("")
 st.write("")
 
 # --- CENTERED FORM SECTION (BOTTOM) ---
-# We use columns to squeeze the form into the middle of the screen like a modern landing page
 spacer_left, main_content, spacer_right = st.columns([1.5, 3, 1.5])
 
 with main_content:
@@ -177,13 +182,9 @@ with main_content:
         if crop_type and state and city:
             with st.spinner("Agent is analyzing live weather data..."):
                 try:
-                    # Combine city and state into a single location string
                     full_location = f"{city}, {state}"
-                    
-                    # Call your correctly named backend function
                     result = run_farm_advisor(crop_type=crop_type, location=full_location)
 
-                    # --- FIXED UI OUTPUT BOX ---
                     st.markdown(f"""
                         <div style="background-color: #ffffff; padding: 25px; border-radius: 10px; color: #1e1e1e; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-left: 6px solid #2e7b32; margin-top: 30px;">
                             <h4 style="color: #2e7b32; margin-top: 0; font-size: 20px;">🌱 Agent Recommendation:</h4>
