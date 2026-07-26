@@ -8,7 +8,7 @@ from agent_brain import run_farm_advisor
 # Changed layout to "wide" so the banner spans the entire screen
 st.set_page_config(page_title="AgroSmart AI", page_icon="🌱", layout="wide", initial_sidebar_state="collapsed")
 
-# Helper function to load local image as a CSS background
+# Helper function to load local image as a CSS background or HTML image
 def get_base64_of_bin_file(bin_file):
     try:
         with open(bin_file, 'rb') as f:
@@ -17,14 +17,22 @@ def get_base64_of_bin_file(bin_file):
     except FileNotFoundError:
         return None
 
-# Load your specific sunset image (UPDATED FILE NAME)
+# Load your specific background and logo images
 bg_base64 = get_base64_of_bin_file('website_banner_image.jpg')
+logo_base64 = get_base64_of_bin_file('logo.png') # Make sure your file is named logo.png
 
-# Construct the background CSS. (Includes a dark overlay so white text is readable)
+# Construct the background CSS
 if bg_base64:
     bg_css = f"background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6)), url('data:image/jpeg;base64,{bg_base64}');"
 else:
-    bg_css = "background-color: #1a4a28;" # Fallback if image is missing
+    bg_css = "background-color: #1a4a28;"
+
+# Construct the Logo HTML
+if logo_base64:
+    logo_html = f'<img src="data:image/png;base64,{logo_base64}" class="hero-logo" alt="AgroSmart AI Logo">'
+else:
+    # Fallback just in case the logo is missing
+    logo_html = '<div class="hero-title">🌱 AGROSMART AI</div>'
 
 st.markdown(f"""
     <style>
@@ -52,10 +60,20 @@ st.markdown(f"""
         right: 50%;
         margin-left: -50vw;
         margin-right: -50vw;
-        padding: 120px 20px 140px 20px;
+        padding: 100px 20px 140px 20px;
         text-align: center;
         color: white;
         box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }}
+    
+    /* Styling for your custom logo */
+    .hero-logo {{
+        max-height: 220px; 
+        width: auto;
+        margin: 0 auto 10px auto;
+        display: block;
+        /* Adds a soft shadow so the logo stands out clearly over the background picture */
+        filter: drop-shadow(2px 4px 8px rgba(0,0,0,0.4)); 
     }}
     
     .hero-title {{
@@ -70,8 +88,8 @@ st.markdown(f"""
         font-family: 'Permanent Marker', cursive;
         font-size: 2.2rem;
         color: #ccff99; 
-        margin-top: -10px;
-        margin-bottom: 20px;
+        margin-top: 5px;
+        margin-bottom: 25px;
         text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
     }}
     
@@ -128,9 +146,9 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # --- FULL WIDTH HERO SECTION (TOP) ---
-st.markdown("""
+st.markdown(f"""
     <div class="hero-banner">
-        <div class="hero-title">🌱 AGROSMART AI</div>
+        {logo_html}
         <div class="hero-slogan">THE ZERO-HARDWARE VIRTUAL AGRONOMIST</div>
         <div class="hero-subtext">This AI agent autonomously analyzes live weather data to optimize crop irrigation and conserve freshwater.</div>
     </div>
