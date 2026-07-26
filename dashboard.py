@@ -6,8 +6,8 @@ import os
 from agent_brain import run_farm_advisor 
 
 # --- UI Configuration & Styling ---
-# Changed layout to "wide" so the banner spans the entire screen
-st.set_page_config(page_title="AgroSmart AI", page_icon="🌱", layout="wide", initial_sidebar_state="collapsed")
+# CHANGED: page_icon is now pointing to your logo file instead of an emoji
+st.set_page_config(page_title="AgroSmart AI", page_icon="logo.jpg", layout="wide", initial_sidebar_state="collapsed")
 
 # Helper function to load local image as a CSS background or HTML image
 def get_base64_of_bin_file(bin_file):
