@@ -14,17 +14,25 @@ st.markdown("""
         background: linear-gradient(to bottom right, #ccff99, #99ffcc);
     }
     
-    /* FIX 1: Force all labels, subtitles, and standard text to be dark */
+    /* Force all labels, subtitles, and standard text to be dark */
     label p, .stMarkdown p, .stText {
         color: #1e1e1e !important; 
     }
     
-    /* FIX 2: Force input boxes and dropdowns to have a white background and dark text */
-    div[data-baseweb="select"] > div, div[data-baseweb="input"] > div {
+    /* FIX: Force text inputs to have a white background and dark text */
+    div[data-baseweb="base-input"] {
         background-color: #ffffff !important;
-        border: 1px solid #cccccc !important;
     }
-    input {
+    div[data-baseweb="base-input"] input {
+        color: #1e1e1e !important;
+        -webkit-text-fill-color: #1e1e1e !important;
+    }
+    
+    /* FIX: Force select dropdowns to have a white background and dark text */
+    div[data-baseweb="select"] > div {
+        background-color: #ffffff !important;
+    }
+    div[data-baseweb="select"] span {
         color: #1e1e1e !important;
     }
     
