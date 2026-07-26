@@ -55,12 +55,32 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # --- Header Section ---
-try:
-    st.image("logo.png", use_column_width=False, width=150)
-except:
-    st.markdown("<h1 style='text-align: center;'>🌱</h1>", unsafe_allow_html=True)
+# Displaying your logo image (which already contains the AGROSMART AI text)
+col1, col2, col3 = st.columns([1, 2, 1])
+with col2:
+    try:
+        # Allowing the image to scale naturally to look like your screenshot
+        st.image("logo.png", use_column_width=True) 
+    except:
+        st.markdown("<h1 style='text-align: center;'>🌱</h1>", unsafe_allow_html=True)
 
-st.markdown("<h1 style='text-align: center; color: #1b5e20;'>AGROSMART AI</h1>", unsafe_allow_html=True)
+# NEW SLOGAN (Replacing the duplicate title text)
+st.markdown("""
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+    .slogan {
+        text-align: center;
+        font-family: 'Permanent Marker', cursive;
+        color: #1a4a28; 
+        font-size: 26px;
+        margin-top: -10px;
+        margin-bottom: 20px;
+        letter-spacing: 1px;
+    }
+    </style>
+    <div class="slogan">THE ZERO-HARDWARE VIRTUAL AGRONOMIST</div>
+""", unsafe_allow_html=True)
+
 st.markdown("<p style='text-align: center; font-weight: bold; color: #1e1e1e;'>This AI agent autonomously analyzes live weather data to optimize crop irrigation and conserve freshwater.</p>", unsafe_allow_html=True)
 st.markdown("---")
 
