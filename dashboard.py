@@ -6,26 +6,42 @@ from agent_brain import run_farm_advisor
 # --- UI Configuration & Styling ---
 st.set_page_config(page_title="AgroSmart AI", page_icon="🌱", layout="centered")
 
-# Custom CSS to set the green gradient background and style the button
+# Custom CSS to set the green gradient background and fix Dark Mode clashes
 st.markdown("""
     <style>
+    /* Base background */
     .stApp {
         background: linear-gradient(to bottom right, #ccff99, #99ffcc);
     }
+    
+    /* FIX 1: Force all labels, subtitles, and standard text to be dark */
+    label p, .stMarkdown p, .stText {
+        color: #1e1e1e !important; 
+    }
+    
+    /* FIX 2: Force input boxes and dropdowns to have a white background and dark text */
+    div[data-baseweb="select"] > div, div[data-baseweb="input"] > div {
+        background-color: #ffffff !important;
+        border: 1px solid #cccccc !important;
+    }
+    input {
+        color: #1e1e1e !important;
+    }
+    
+    /* Button styling */
     div.stButton > button:first-child {
         background-color: #2e7b32;
-        color: white;
         border-radius: 5px;
         border: none;
         padding: 10px 20px;
     }
     div.stButton > button:first-child:hover {
         background-color: #1b5e20;
-        color: white;
     }
-    /* Make standard text dark for readability */
-    .stMarkdown, .stText {
-        color: #1e1e1e !important; 
+    
+    /* Ensure the text inside the button stays strictly white */
+    div.stButton > button:first-child p {
+        color: #ffffff !important;
     }
     </style>
 """, unsafe_allow_html=True)
