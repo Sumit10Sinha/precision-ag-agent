@@ -18,7 +18,7 @@ def get_base64_of_bin_file(bin_file):
         return None
 
 # Load your specific background and logo images
-bg_base64 = get_base64_of_bin_file('website_banner_image.jpg')
+bg_base64 = get_base64_of_bin_file('website_banner_image.jpeg')
 logo_base64 = get_base64_of_bin_file('logo.png') # Make sure your file is named logo.png
 
 # Construct the background CSS
@@ -66,14 +66,14 @@ st.markdown(f"""
         box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     }}
     
-    /* Styling for your custom logo */
+    /* Styling for your custom logo - HIGH CONTRAST & BRIGHTNESS */
     .hero-logo {{
         max-height: 220px; 
         width: auto;
         margin: 0 auto 10px auto;
         display: block;
-        /* Adds a soft shadow so the logo stands out clearly over the background picture */
-        filter: drop-shadow(2px 4px 8px rgba(0,0,0,0.4)); 
+        /* Strongly boosts brightness, ups contrast, and adds a soft white glow */
+        filter: brightness(2.0) contrast(1.2) drop-shadow(0px 0px 15px rgba(255, 255, 255, 0.8)); 
     }}
     
     .hero-title {{
