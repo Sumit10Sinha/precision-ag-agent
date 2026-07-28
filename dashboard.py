@@ -41,7 +41,8 @@ if not logo_base64:
 
 # Construct the background CSS
 if bg_base64:
-    bg_css = f"background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6)), url('data:image/jpeg;base64,{bg_base64}');"
+    # Slightly reduced the darkness of the overall gradient so the box stands out more
+    bg_css = f"background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)), url('data:image/jpeg;base64,{bg_base64}');"
 else:
     bg_css = "background-color: #1a4a28;"
 
@@ -78,10 +79,21 @@ st.markdown(f"""
         right: 50%;
         margin-left: -50vw;
         margin-right: -50vw;
-        padding: 100px 20px 140px 20px;
+        padding: 80px 20px 100px 20px;
         text-align: center;
         color: white;
         box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }}
+    
+    /* --- NEW TRANSLUCENT CONTENT BOX --- */
+    .hero-content-box {{
+        background-color: rgba(0, 0, 0, 0.65); /* The dark translucent background */
+        padding: 50px 40px;
+        max-width: 900px;
+        margin: 0 auto; /* Centers the box */
+        /* Optional: Adding a slight blur effect to the background behind the box for a modern feel */
+        backdrop-filter: blur(4px); 
+        -webkit-backdrop-filter: blur(4px);
     }}
     
     /* Styling for your custom logo */
@@ -103,7 +115,7 @@ st.markdown(f"""
     .hero-slogan {{
         font-family: 'Permanent Marker', cursive;
         font-size: 2.2rem;
-        color: #ccff99; 
+        color: #ffffff; /* Changed to white to match your new image */
         margin-top: 5px;
         margin-bottom: 25px;
         text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
@@ -162,11 +174,14 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # --- FULL WIDTH HERO SECTION (TOP) ---
+# Notice the new div class="hero-content-box" wrapping the content
 st.markdown(f"""
     <div class="hero-banner">
-        {logo_html}
-        <div class="hero-slogan">THE ZERO-HARDWARE VIRTUAL AGRONOMIST</div>
-        <div class="hero-subtext">This AI agent autonomously analyzes live weather data to optimize crop irrigation and conserve freshwater.</div>
+        <div class="hero-content-box">
+            {logo_html}
+            <div class="hero-slogan">THE ZERO-HARDWARE VIRTUAL AGRONOMIST</div>
+            <div class="hero-subtext">This AI agent autonomously analyzes live weather data to optimize crop irrigation and conserve freshwater.</div>
+        </div>
     </div>
 """, unsafe_allow_html=True)
 
