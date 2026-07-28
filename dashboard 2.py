@@ -84,12 +84,14 @@ st.markdown(f"""
         box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     }}
     
-    /* Styling for your custom logo */
+    /* Styling for your custom logo - HIGH CONTRAST & BRIGHTNESS */
     .hero-logo {{
         max-height: 220px; 
         width: auto;
         margin: 0 auto 10px auto;
         display: block;
+        /* Strongly boosts brightness, ups contrast, and adds a soft white glow */
+        filter: brightness(2.0) contrast(1.2) drop-shadow(0px 0px 15px rgba(255, 255, 255, 0.8)); 
     }}
     
     .hero-title {{
