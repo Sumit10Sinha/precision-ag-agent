@@ -1,7 +1,29 @@
 import streamlit as st
 import base64
 import os
+import streamlit as st_core  # <-- Added for Google Verification
 from PIL import Image
+
+# --- GOOGLE SEARCH CONSOLE VERIFICATION CODE ---
+meta_tag = '<meta name="google-site-verification" content="mYfTBNb4gyQ8QSv_XoJtTFpTUEaFGHhsMZGPc0DC9W0" />'
+
+# Locate the Streamlit installation directory
+try:
+    streamlit_dir = os.path.dirname(st_core.__file__)
+    index_path = os.path.join(streamlit_dir, "static", "index.html")
+
+    # Read the default HTML file
+    with open(index_path, "r") as file:
+        html_content = file.read()
+
+    # Inject the meta tag into the <head> section if it's not already there
+    if meta_tag not in html_content:
+        updated_html = html_content.replace("<head>", f"<head>\n    {meta_tag}")
+        with open(index_path, "w") as file:
+            file.write(updated_html)
+except Exception as e:
+    print(f"Meta tag injection skipped: {e}")
+# --- END VERIFICATION CODE ---
 
 # Fixed import statement to match your exact function name
 from agent_brain import run_farm_advisor 
